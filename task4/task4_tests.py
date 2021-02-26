@@ -2,17 +2,18 @@ import unittest
 import task4
 import string
 
+
 class TestTask4(unittest.TestCase):
 
     def test_example1(self):
         test_string = 'Hello, world!'
-        self.assertEqual(task4.caesar(test_string, 2, (string.ascii_lowercase, \
-        string.ascii_uppercase)), 'Jgnnq, yqtnf!')
+        self.assertEqual(task4.caesar(test_string, 2, (string.ascii_lowercase,
+                                                       string.ascii_uppercase)), 'Jgnnq, yqtnf!')
 
     def test_example2(self):
         test_string = 'Привет, мир!'
-        self.assertEqual(task4.caesar(test_string, 2, ('абвгдеёжзийклмнопрстуфхцчшщъыьэюя', \
-                'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ')), 'Сткджф, окт!')
+        self.assertEqual(task4.caesar(test_string, 2, ('абвгдеёжзийклмнопрстуфхцчшщъыьэюя',
+                                                       'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ')), 'Сткджф, окт!')
 
     def test_empty_string(self):
         test_string = ''
@@ -27,6 +28,7 @@ class TestTask4(unittest.TestCase):
         test_string = None
         with self.assertRaises(AttributeError):
             task4.caesar(test_string, 2, ())
+
 
 if __name__ == '__main__':
     unittest.main()
