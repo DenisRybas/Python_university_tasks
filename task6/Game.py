@@ -36,6 +36,7 @@ class Window(QMainWindow):
         self.timer.timeout.connect(self.timer_event)
 
         self.next_tetromino = Tetromino()
+        self.new_tetromino = self.next_tetromino
         self.start_game()
 
     def main_page(self):
@@ -78,8 +79,8 @@ class Window(QMainWindow):
 
     def create_cell(self):
         cell = QLabel(self)
-        cell.setFixedHeight(70)
-        cell.setFixedWidth(70)
+        cell.setFixedHeight(60)
+        cell.setFixedWidth(60)
         cell.setStyleSheet(f"background-color:{self.board_color_hex};"
                            f"border: 1px inset {self.grid_color_hex}")
         return cell
@@ -116,43 +117,9 @@ class Window(QMainWindow):
             self.update_board()
             test_position = copy.deepcopy(self.new_tetromino.tetromino)
             test_position[4][0] += 1
-            if self.new_tetromino.check_existing_tetrominos(test_position, self.board) is False:
+            if GameService.check_existing_tetrominos(test_position, self.board) is False:
                 self.game_over()
         self.update_tetromino()
-
-    def timer_event(self):
-        if self.game_running is True:
-            self.check_move_down()
-
-    def keyPressEvent(self, event):
-        pressedkey = event.key()
-        if pressedkey == Qt.Key_P:
-            if self.game_running is True:
-                self.game_running = False
-            else:
-                self.game_running = True
-            event.accept()
-        if self.game_running is True:
-            if pressedkey == Qt.Key_Up:
-                self.delete_tetromino()
-                self.new_tetromino.rotate(self.rows, self.columns, self.board)
-                self.update_tetromino()
-                event.accept()
-            elif pressedkey == Qt.Key_Down:
-                self.check_move_down()
-                event.accept()
-            elif pressedkey == Qt.Key_Left:
-                self.delete_tetromino()
-                self.new_tetromino.move_left(self.rows, self.columns, self.board)
-                self.update_tetromino()
-                event.accept()
-            elif pressedkey == Qt.Key_Right:
-                self.delete_tetromino()
-                self.new_tetromino.move_right(self.rows, self.columns, self.board)
-                self.update_tetromino()
-                event.accept()
-            else:
-                event.ignore()
 
     def add_new_tetromino(self):
         self.score += self.point_tetromino
@@ -226,6 +193,40 @@ class Window(QMainWindow):
         game_over.setStandardButtons(QMessageBox.Ok)
         game_over.buttonClicked.connect(self.start_game)
         game_over.exec_()
+
+    def timer_event(self):
+        if self.game_running is True:
+            self.check_move_down()
+
+    def keyPressEvent(self, event):
+        pressedkey = event.key()
+        if pressedkey == Qt.Key_P:
+            if self.game_running is True:
+                self.game_running = False
+            else:
+                self.game_running = True
+            event.accept()
+        if self.game_running is True:
+            if pressedkey == Qt.Key_Up:
+                self.delete_tetromino()
+                self.new_tetromino.rotate(self.rows, self.columns, self.board)
+                self.update_tetromino()
+                event.accept()
+            elif pressedkey == Qt.Key_Down:
+                self.check_move_down()
+                event.accept()
+            elif pressedkey == Qt.Key_Left:
+                self.delete_tetromino()
+                self.new_tetromino.move_left(self.rows, self.columns, self.board)
+                self.update_tetromino()
+                event.accept()
+            elif pressedkey == Qt.Key_Right:
+                self.delete_tetromino()
+                self.new_tetromino.move_right(self.rows, self.columns, self.board)
+                self.update_tetromino()
+                event.accept()
+            else:
+                event.ignore()
 
 
 if __name__ == '__main__':

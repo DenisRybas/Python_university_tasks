@@ -6,7 +6,7 @@ def move(fn):
 
 @move
 def move_negative_numbers_to_start_of_list(list):
-    if (type(list) is type([])):
+    if type(list) is type([]):
         return list
     else:
         raise AttributeError(f"Argument must be of type list, not {type(list)}")
